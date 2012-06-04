@@ -1,0 +1,59 @@
+static_dir = Dir(
+    base='client/static/',
+    index_file='index.html',
+    default_ctype='text/plain'
+)
+
+js_src_dir = Dir(
+    base='client/src/',
+    index_file='index.html',
+    default_ctype='text/plain'
+)
+
+js_src_libs_dir = Dir(
+    base='client/src/libs/',
+    index_file='index.html',
+    default_ctype='text/plain'
+)
+
+js_templates_dir = Dir(
+    base='client/static/templates/',
+    index_file='index.html',
+    default_ctype='text/plain'
+)
+
+favicon_dir = Dir(
+    base='client/static/',
+    index_file='index.html',
+    default_ctype='image/vnd.microsoft.icon'
+)
+
+hukkster_app = Handler(
+    send_spec='ipc://localhost_app:1',
+    send_ident='102fc026-b0b6-4291-97bc-0f0089b3bca2',
+    recv_spec='ipc://localhost_app:0',
+    recv_ident='')
+
+hukkster_host = Host(
+    name="localhost",
+    routes={
+        '/favicon.ico': favicon_dir,
+        #'/static/js': js_src_dir,
+        #'/static/js/templates': js_templates_dir,
+        '/static': static_dir,
+        '/': name_app
+        })
+
+hukkster_server = Server(
+    uuid="3e50313d-aa07-4926-8577-738cb56f6958",
+    access_log="/log/name.access.log",
+    error_log="/log/name.error.log",
+    chroot="./",
+    default_host="localhost",
+    name="name",
+    pid_file="/run/name.pid",
+    port=90,
+    hosts = [name_host]
+)
+
+servers = [name_server]
